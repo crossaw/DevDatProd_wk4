@@ -1,0 +1,33 @@
+# DeveDataProd_proj1
+
+```{r}
+library(jsonlite)
+library(magrittr)
+library(leaflet)
+censDat <- fromJSON("https://api.census.gov/data/2016/pep/population?get=POP,DATE,DATE_DESC&for=state:*")
+colnames(censDat) <- censDat[1,]
+censDat <- censDat[2:nrow(censDat),]
+```
+The source link is at https://www.census.gov/data/developers/data-sets/popest-popproj/popest.html.
+
+
+
+```{r}
+popCen <- read.csv("http://www2.census.gov/geo/docs/reference/cenpop2010/CenPop2010_Mean_ST.txt", stringsAsFactors=F)
+```
+Text file containing population and mean centers of population by state/state equivalent entity for the 2010 Census. The record layout is:
+- STATEFP:  2-character state FIPS code
+- STNAME:  state name
+- POPULATION:  2010 Census population tabulated for the state
+- LATITUDE:  latitude coordinate for the center of population for the state
+- LONGITUDE:  longitude coordinate for the center of population for the state
+
+The source link is at https://www.census.gov/geo/reference/centersofpop.html under [Data Files].
+
+
+```{r}
+popCen <- read.csv("http://www2.census.gov/geo/docs/reference/cenpop2010/CenPop2010_Mean_ST.txt", stringsAsFactors=F)
+
+stDF  <- data.frame(lat=popCen$LATITUDE, lng=popCen$LONGITUDE)
+stDF %>% leaflet() %>% addProviderTiles(providers$OpenStreetMap) %>% addCircleMarkers()
+```
