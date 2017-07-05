@@ -3,11 +3,11 @@ library(leaflet)
 
 shinyUI(fluidPage(
   titlePanel("Population Growth by State"),
-  titlePanel(paste( "Created: ", date(), " GMT" )),
-  
+
   sidebarLayout(
     sidebarPanel(
-       radioButtons("yr", "Year", 2010:2016),
+       radioButtons("refY", "Year", 2010:2016),
+       radioButtons("resY", "Year", )
        width=2
     ),
     
