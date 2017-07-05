@@ -2,6 +2,16 @@ library(jsonlite)
 library(magrittr)
 library(curl)
 
+getCensDat <- function (api) {
+   cd           <- fromJSON(paste0("https://", api, "?get=POP,DATE_DESC&for=state:*"))
+   colnames(cd) <- cd[1,]
+   cd           <- cd[2:nrow(cd),]
+   cd           <- data.frame(cd, stringsAsFactors=F)
+   cd[1]        <- as.integer(cd[,1])
+   cd           <- cd[ cd[2] != sub("7/1/(\\d{4}) .*", "\\2", cd[,2]), ]
+   cd[2]        <- sub("7/1/(\\d{4}) .*", "\\1", cd[,2])
+}
+
 censDat <- fromJSON("https://api.census.gov/data/2016/pep/population?get=POP,DATE&for=state:*")
 colnames(censDat) <- censDat[1,]
 censDat <- censDat[2:nrow(censDat),]
