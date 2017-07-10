@@ -1,29 +1,21 @@
-# DeveDataProd_proj1
+# DevDatProd_wk4
+
+This is the github repo for Arnold Cross's week 4 project in the Johns Hopkins coursera class, Developing Data Products.  The project has two parts.  The first part is a shiny app published at https://arnoldcross.shinyapps.io/DevDatProd_wk4/.  The second part is a slideshow created in Rstudio Presentation.
+
+The project is based on population data from the U.S. Census Bureau.  The data is explained at https://www.census.gov/data/developers/data-sets/popest-popproj/popest.html.
+
+The following code downloads one population dataset but does not do anything with it.
 
 ```{r}
 library(jsonlite)
 library(magrittr)
 library(leaflet)
 censDat <- fromJSON("https://api.census.gov/data/2016/pep/population?get=POP,DATE,DATE_DESC&for=state:*")
-colnames(censDat) <- censDat[1,]
-censDat <- censDat[2:nrow(censDat),]
 ```
-The source link is at https://www.census.gov/data/developers/data-sets/popest-popproj/popest.html.
 
+Below is a download and mapping of the population centers.
 
-
-```{r}
-popCen <- read.csv("http://www2.census.gov/geo/docs/reference/cenpop2010/CenPop2010_Mean_ST.txt", stringsAsFactors=F)
-```
-Text file containing population and mean centers of population by state/state equivalent entity for the 2010 Census. The record layout is:
-- STATEFP:  2-character state FIPS code
-- STNAME:  state name
-- POPULATION:  2010 Census population tabulated for the state
-- LATITUDE:  latitude coordinate for the center of population for the state
-- LONGITUDE:  longitude coordinate for the center of population for the state
-
-The source link is at https://www.census.gov/geo/reference/centersofpop.html under [Data Files].
-
+The source link is at https://www.census.gov/geo/reference/centersofpop.html under [Data Files], click [Centers of Population by State:  2010].
 
 ```{r}
 popCen <- read.csv("http://www2.census.gov/geo/docs/reference/cenpop2010/CenPop2010_Mean_ST.txt", stringsAsFactors=F)
